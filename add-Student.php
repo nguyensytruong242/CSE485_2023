@@ -12,7 +12,7 @@
         <div class="container">
                         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">QLHS</a>
+                <a class="navbar-brand" href="admin.php">QLHS</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -40,8 +40,8 @@
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <input id="txtSearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search ">
-                    <button id="btnSearch" class="btn btn-outline-success" type="submit">Search</button>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 </div>
             </div>
@@ -50,49 +50,32 @@
     </header>
     <main>
     <div class="container">
-        <h3 class="text-center text-primary mt-5 mb-5">MANAGE STUDENT LIST</h3>
-        <table class="table">
-            <!-- <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">NAME</th>
-                    <th scope="col">AGE</th>
-                    <th scope="col">GRADE</th>
-                </tr>
-            </thead> -->
-            <tbody>
-                <!-- Vùng này là dữ liệu cần lặp lại hiển thị từ CSDL -->
-                <!--  -->
-                <?php
-                    $file = 'db_dshs.txt';
-                    $handle = fopen($file, 'r');
-                    if ($handle) {
-                        $header = fgets($handle);
-                        // echo '<table>';
-                        echo '<tr><th>ID</th><th>NAME</th><th>AGE</th><th>GRADE</th></tr>';
-                        $i = 1;
-                        while (($line = fgets($handle)) !== false) {
-                            
-                            $data = explode(',', $line);
-                            echo '<tr>';
-                            // echo '<td>' . $i . '</td>';
-                            echo '<td>' . $data[0] . '</td>';
-                            echo '<td>' . $data[1] . '</td>';
-                            echo '<td>' . $data[2] . '</td>';
-                            echo '<td>' . $data[3] . '</td>';
-                            echo '</tr>';
-                            $i++;
-                        }
-                        // echo '</table>';
-                        fclose($handle);
-                    } else {
-                        echo "Không thể mở file!";
-                    }
-                ?>
+        <?php
+            $lines = file('db_dshs.txt');
 
-                
-            </tbody>
-        </table>
+            // Đếm số phần tử trong mảng (tức là số dòng trong tệp)
+            $num_lines = count($lines);
+        ?>
+        <h5 class="text-center text-primary mt-5 mb-5">THÊM MỚI DANH BẠ SINH VIÊN</h5>
+            <form action="process-addStudent.php" method="post">
+            <div class="mb-3">
+                    <label for="txtId" class="form-label">ID</label>
+                    <input type="text" readonly class="form-control" id="txtId" name="txtId" placeholder= "" value="<?php echo $num_lines ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">NAME</label>
+                    <input type="text" class="form-control" id="txtName" name="txtName" placeholder="Nhập tên">
+                </div>
+                <div class="mb-3">
+                    <label for="txtAge" class="form-label">AGE</label>
+                    <input type="number" class="form-control" id="txtAge" name="txtAge" placeholder="Nhập tuổi">
+                </div>
+                <div class="mb-3">
+                    <label for="txtGrade" class="form-label">GRADE</label>
+                    <input type="number" class="form-control" id="txtGrade" name="txtGrade" placeholder="Nhập khối">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
     </div>
     </main>
     
