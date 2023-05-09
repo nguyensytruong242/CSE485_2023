@@ -66,15 +66,29 @@
                 <!-- Vùng này là dữ liệu cần lặp lại hiển thị từ CSDL -->
                 <!--  -->
                 <?php
-                    $file = 'db_dshs.txt';
-                    $handle = fopen($file, 'r');
-                    if ($handle) {
-                        $header = fgets($handle);
+                    include 'student.php';
+                    include 'studentDAO.php';
+                    $dao = new StudentDAO();
+                    $file = fopen("db_dshs.txt", "r");
+                    $students = $dao->getAll();
+                    if ($file) {
+                        $header = fgets($file);
                         // echo '<table>';
                         echo '<tr><th>ID</th><th>NAME</th><th>AGE</th><th>GRADE</th><th>EIDT</th><th>DELETE</th></tr>';
-                        $i = 1;
-                        while (($line = fgets($handle)) !== false) {
+                        while (($line = fgets($file)) !== false) {
                             $data = explode(',', $line);
+                            $id = trim($data[0]);
+                            $name = trim($data[1]);
+                            $age = trim($data[2]);
+                            $grade = trim($data[3]);
+                            $student = new Student($id, $name, $age,$grade);
+
+                            // Thêm sinh viên vào danh sách
+                            $dao->create($student);
+                        }
+                        fclose($file);
+                        $students = $dao->getAll();
+                        foreach ($students as $student) {
                 ?>            
                             <!-- $data = explode(',', $line);
                             echo '<tr>';
@@ -88,19 +102,18 @@
                             echo '</tr>';
                             $i++; -->
                             <tr>
-                            <th scope="row"><?php echo $data[0]?></th>
-                                <td><?php echo $data[1]?></td>
-                                <td><?php echo $data[2]?></td>
-                                <td><?php echo $data[3]?></td>
+                            <th scope="row"><?php echo $student->id ?></th>
+                                <td><?php echo $student->name ?></td>
+                                <td><?php echo $student->age ?></td>
+                                <td><?php echo $student->grade ?></td>
                                 <td><a href="editEmployee.php?id="><i class="bi bi-pencil-square"></i></a></td>
                                 <td><a href="deleted-Student.php?id=<?php echo $data[0]?>"><i class="bi bi-trash"></i></a></td>
                             </tr>
                             
                 <?php
-                        $i++;
                         }
-                      // echo '</table>';
-                      fclose($handle);
+                      echo '</table>';
+                    //   fclose($file);
                   } else {
                       echo "Không thể mở file!";
                   }
