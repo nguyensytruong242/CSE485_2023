@@ -40,8 +40,8 @@
                     <a class="nav-link disabled">Disabled</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form action="read-Student.php" class="d-flex" role="search" method="post">
+                    <input id="txtSearch" name="txtSearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 </div>
@@ -106,7 +106,7 @@
                                 <td><?php echo $student->name ?></td>
                                 <td><?php echo $student->age ?></td>
                                 <td><?php echo $student->grade ?></td>
-                                <td><a href="editEmployee.php?id="><i class="bi bi-pencil-square"></i></a></td>
+                                <td><a href="update-Student.php?id=<?php echo $data[0]?>"><i class="bi bi-pencil-square"></i></a></td>
                                 <td><a href="deleted-Student.php?id=<?php echo $data[0]?>"><i class="bi bi-trash"></i></a></td>
                             </tr>
                             
