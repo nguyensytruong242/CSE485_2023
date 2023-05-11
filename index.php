@@ -52,45 +52,56 @@
     <div class="container">
         <h3 class="text-center text-primary mt-5 mb-5">MANAGE STUDENT LIST</h3>
         <table class="table">
-            <!-- <thead>
+            <thead>
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">NAME</th>
                     <th scope="col">AGE</th>
                     <th scope="col">GRADE</th>
                 </tr>
-            </thead> -->
+            </thead>
             <tbody>
                 <!-- Vùng này là dữ liệu cần lặp lại hiển thị từ CSDL -->
                 <!--  -->
                 <?php
-                    $file = 'db_dshs.txt';
-                    $handle = fopen($file, 'r');
-                    if ($handle) {
-                        $header = fgets($handle);
-                        // echo '<table>';
-                        echo '<tr><th>ID</th><th>NAME</th><th>AGE</th><th>GRADE</th></tr>';
-                        $i = 1;
-                        while (($line = fgets($handle)) !== false) {
-                            
+                    include 'student.php';
+                    include 'studentDAO.php';
+                    $dao = new StudentDAO();
+                    $file = fopen("db_dshs.txt", "r");
+                    // $students = $dao->getAll();
+                    if($file){
+                        $header = fgets($file);
+                        while (($line = fgets($file)) !== false) {
+                            // Tách dữ liệu từng sinh viên và tạo đối tượng Student
                             $data = explode(',', $line);
-                            echo '<tr>';
-                            // echo '<td>' . $i . '</td>';
-                            echo '<td>' . $data[0] . '</td>';
-                            echo '<td>' . $data[1] . '</td>';
-                            echo '<td>' . $data[2] . '</td>';
-                            echo '<td>' . $data[3] . '</td>';
-                            echo '</tr>';
-                            $i++;
+                            $id = trim($data[0]);
+                            $name = trim($data[1]);
+                            $age = trim($data[2]);
+                            $grade = trim($data[3]);
+                            $student = new Student($id, $name, $age,$grade);
+
+                            // Thêm sinh viên vào danh sách
+                            $dao->create($student);
                         }
-                        // echo '</table>';
-                        fclose($handle);
-                    } else {
-                        echo "Không thể mở file!";
+                        fclose($file);
+
+                        // Hiển thị danh sách sinh viên ra bảng
+                        $students = $dao->getAll();
+                        // echo "<tr><th>ID</th><th>Name</th><th>Age</th><th>Grade</th></tr>";
+                        foreach ($students as $student) {
+                            echo "<tr>";
+                            echo "<td>".$student->id."</td>";
+                            echo "<td>".$student->name."</td>";
+                            echo "<td>".$student->age."</td>";
+                            echo "<td>".$student->grade."</td>";
+                            echo "</tr>";
+                        }
+                        echo "</table>";
+                    }
+                    else{
+                        echo "Không thể mở file";
                     }
                 ?>
-
-                
             </tbody>
         </table>
     </div>
