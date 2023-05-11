@@ -75,6 +75,7 @@
                     <input type="number" class="form-control" id="txtGrade" name="txtGrade" placeholder="Nhập khối">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="admin.php" type="button" class="btn btn-primary text-center">Back</a>
             </form>
     </div>
     </main>
