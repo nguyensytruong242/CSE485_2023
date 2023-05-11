@@ -1,21 +1,35 @@
 <?php
+    include 'studentDAO.php';
+    include 'student.php';
+    // Lấy ID của sinh viên cần xóa từ URL
     $id = $_GET['id'];
-    $file = 'db_dshs.txt';
-    $handle = fopen($file, 'r+');
-    if ($handle) {
-        $content = array(); // mảng lưu nội dung file
-        while (!feof($handle)) {
-            $line = fgets($handle);
-            if ($line != "$id") { // nếu không phải dòng cần xóa thì lưu vào mảng
-                $content[] = $line;
-            }
+
+    // Tạo đối tượng StudentDAO
+    $dao = new StudentDAO();
+
+    // Đọc danh sách sinh viên từ file txt và thêm vào mảng students
+    $file = fopen('db_dshs.txt', 'r');
+    while (!feof($file)) {
+        $line = fgets($file);
+        if ($line != "") {
+            $data = explode(',', $line);
+            $student = new Student(trim($data[0]), trim($data[1]), trim($data[2]), trim($data[3]));
+            $dao->create($student);
         }
-        fclose($handle);
-        unset($content[$id]); // xóa phần tử thứ 2 trong mảng (đây là dòng cần xóa)
-        $newContent = implode('', $content); // ghép các phần tử còn lại của mảng thành một chuỗi
-        file_put_contents($file, $newContent); // ghi lại chuỗi mới vào file
-        header("location: admin.php");
-    } else {
-        echo "Không thể mở file!";
     }
+    fclose($file);
+
+    // Xóa sinh viên bằng ID sử dụng phương thức delete() của lớp StudentDAO
+    $result = $dao->delete($id);
+
+    // Lưu danh sách sinh viên vào file txt
+    $file = fopen('db_dshs.txt', 'w');
+    foreach ($dao->getAll() as $student) {
+        fwrite($file, $student->id . ',' . $student->name . ',' . $student->age . ',' . $student->grade . "\n");
+    }
+    fclose($file);
+
+    // Chuyển hướng người dùng đến trang danh sách sinh viên
+    header("Location: admin.php");
+    exit;
 ?>
