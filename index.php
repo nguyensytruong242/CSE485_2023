@@ -39,9 +39,9 @@
                     <a class="nav-link disabled">Disabled</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input id="txtSearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search ">
-                    <button id="btnSearch" class="btn btn-outline-success" type="submit">Search</button>
+                <form action="read-Student.php" class="d-flex" role="search" method="post">
+                    <input id="txtSearch" name="txtSearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 </div>
             </div>

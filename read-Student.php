@@ -41,15 +41,17 @@
                         echo '<td>' . $student->name . '</td>';
                         echo '<td>' . $student->age . '</td>';
                         echo '<td>' . $student->grade . '</td>';
+                        
                 ?> 
                 <?php 
                     } else { 
-                        echo "Không tìm thấy sinh viên!"; 
+                        echo '<h3 class="text-warning text-center"> Không tìm thấy ID. Vui lòng kiểm tra lại </h3>';
                     } 
                 ?>
                 </tr>
             </tbody>
         </table>
+        <div class = "text-center"><a href="index.php" type="button" class="btn btn-primary">Back</a> </div>';
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>

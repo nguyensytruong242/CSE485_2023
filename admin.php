@@ -106,8 +106,8 @@
                                 <td><?php echo $student->name ?></td>
                                 <td><?php echo $student->age ?></td>
                                 <td><?php echo $student->grade ?></td>
-                                <td><a href="update-Student.php?id=<?php echo $data[0]?>"><i class="bi bi-pencil-square"></i></a></td>
-                                <td><a href="deleted-Student.php?id=<?php echo $data[0]?>"><i class="bi bi-trash"></i></a></td>
+                                <td><a href="update-Student.php?id=<?php echo $student->id?>"><i class="bi bi-pencil-square"></i></a></td>
+                                <td><a href="deleted-Student.php?id=<?php echo $student->id?>"><i class="bi bi-trash"></i></a></td>
                             </tr>
                             
                 <?php
